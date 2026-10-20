@@ -17,14 +17,14 @@ A runnable full-stack starter implementation based on the provided project speci
 ```text
 LinguaSense/
 ├── backend/
-│   ├── app.py
-│   ├── requirements.txt
+│   ├── .venv/
 │   ├── .env
-│   └── .gitignore
+│   └── app.py
 ├── frontend/
 │   ├── index.html
 │   ├── styles.css
 │   └── app.js
+└── run.bat
 └── README.md
 ```
 
@@ -44,7 +44,7 @@ python -m venv .venv
 
 Windows PowerShell:
 ```powershell
-.venv\\Scripts\\Activate.ps1
+.venv\Scripts\Activate.ps1
 ```
 
 macOS/Linux:
