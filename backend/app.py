@@ -27,7 +27,14 @@ app.config["MAX_CONTENT_LENGTH"] = 6 * 1024 * 1024  # 6 MB total request cap
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "change-this-jwt-secret")
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=12)
 
-CORS(app, resources={r"/api/*": {"origins": os.getenv("FRONTEND_ORIGIN", "*")}})
+CORS(
+    app,
+    resources={
+        r"/api/*": {
+            "origins": ["https://linguasense-frontend.onrender.com"]
+        }
+    }
+)
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
