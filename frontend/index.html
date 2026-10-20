@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>LinguaSense — Speak, Summarize, Simplify</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">L</span><span>LinguaSense<small>Speak · Summarize ·
+            Simplify</small></span></a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <button class="nav-item active" data-view="refine"><span>✦</span> Writing assistant</button>
+      <button class="nav-item" data-view="summarize"><span>▤</span> Summarization</button>
+      <button class="nav-item" data-view="translate"><span>文</span> Translation</button>
+      <button class="nav-item" data-view="voice"><span>◖</span> Voice studio</button>
+      <button class="nav-item" data-view="history"><span>↺</span> History</button>
+      <div class="sidebar-bottom">
+        <div class="persona-mini"><span class="dot"></span>
+          <div><small>ACTIVE PERSONA</small><strong id="sidePersona">Professional</strong></div>
+        </div>
+        <button id="logoutBtn" class="text-button hidden">Sign out ↗</button>
+        <div class="sidebar-foot">AI-powered language workspace</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">YOUR PERSONAL LANGUAGE WORKSPACE</div>
+          <h1 id="pageTitle">Writing assistant</h1>
+        </div>
+        <div class="top-actions"><span id="connectionStatus" class="status-pill"><i></i> Checking API</span><button
+            id="authOpen" class="button button-outline">Sign in</button>
+          <div id="userChip" class="user-chip hidden">G</div>
+        </div>
+      </header>
+
+      <section id="authPanel" class="auth-panel hidden">
+        <div class="auth-copy"><span class="eyebrow">WELCOME TO LINGUASENSE</span>
+          <h2>Make every word<br>work better.</h2>
+          <p>Sign in to save your work, choose a writing persona, and keep your language tools in one place.</p>
+        </div>
+        <div class="auth-form">
+          <div class="tabs"><button class="tab active" data-auth="login">Sign in</button><button class="tab"
+              data-auth="register">Create account</button></div>
+          <form id="authForm">
+            <div id="nameField" class="field hidden"><label>Name</label><input name="name" placeholder="Your name">
+            </div>
+            <div class="field"><label>Email address</label><input name="email" type="email" required
+                placeholder="you@example.com"></div>
+            <div class="field"><label>Password</label><input name="password" type="password" required minlength="8"
+                placeholder="At least 8 characters"></div><button class="button button-primary full" type="submit"
+              id="authSubmit">Sign in</button>
+            <p id="authMessage" class="form-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <section id="workspace">
+        <div class="welcome-row">
+          <div>
+            <h2 id="welcomeTitle">Clear thinking starts with clear language.</h2>
+            <p>Refine your writing, capture the important points, and communicate across languages.</p>
+          </div>
+          <div class="persona-picker"><label for="personaSelect">Writing persona</label><select id="personaSelect">
+              <option>Professional</option>
+              <option>Student</option>
+              <option>Creative</option>
+              <option>Friendly</option>
+              <option>Academic</option>
+            </select></div>
+        </div>
+        <div id="notice" class="notice hidden"></div>
+
+        <section class="tool-view" id="view-refine">
+          <div class="tool-heading">
+            <div class="tool-icon purple">✦</div>
+            <div>
+              <h2>Writing assistant</h2>
+              <p>Improve grammar, tone, and clarity without losing your meaning.</p>
+            </div>
+          </div>
+          <div class="editor-grid">
+            <div class="panel editor-panel">
+              <div class="panel-top"><label for="refineInput">YOUR TEXT</label><span id="refineCount">0
+                  characters</span></div><textarea id="refineInput"
+                placeholder="Paste an email, paragraph, message, or draft here…"></textarea>
+              <div class="editor-bottom"><select id="refineAction">
+                  <option value="Correct grammar, improve clarity, and preserve meaning.">Fix grammar & clarity</option>
+                  <option value="Rewrite in a more concise style while preserving key details.">Make concise</option>
+                  <option value="Make the text more formal and professional.">Make professional</option>
+                  <option value="Make the text warmer and friendlier.">Make friendlier</option>
+                  <option value="Paraphrase the text without changing its meaning.">Paraphrase</option>
+                </select><button id="refineBtn" class="button button-primary">Refine text <span>→</span></button></div>
+            </div>
+            <div class="panel output-panel">
+              <div class="panel-top"><label>REFINED RESULT</label><span class="result-tag">AI RESULT</span></div>
+              <div id="refineOutput" class="output-content empty-state">Your improved text will appear here.</div>
+              <div class="editor-bottom"><span class="subtle">Review before sharing</span>
+                <div class="inline-actions"><button class="button button-outline small"
+                    data-copy="refineOutput">Copy</button><button class="button button-outline small"
+                    data-download="refineOutput" data-filename="refined-text.txt">Download</button></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tool-view hidden" id="view-summarize">
+          <div class="tool-heading">
+            <div class="tool-icon blue">▤</div>
+            <div>
+              <h2>Smart summarization</h2>
+              <p>Turn long content into a focused, readable summary.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-top"><label for="summaryInput">SOURCE TEXT</label><span id="summaryCount">0
+                characters</span></div><textarea id="summaryInput" class="large-textarea"
+              placeholder="Paste notes, an article, a report, or a document's text…"></textarea>
+            <div class="document-upload">
+              <div class="control-group"><label for="summaryFile">OR UPLOAD A DOCUMENT (.TXT, .PDF, .DOCX · MAX 5
+                  MB)</label><input id="summaryFile" type="file"
+                  accept=".txt,.pdf,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              </div><button id="summaryFileBtn" class="button button-outline" type="button">Upload & summarize</button>
+              <p id="summaryFileHelp" class="subtle">Text-based documents are supported. Scanned PDFs and image-only
+                documents need OCR.</p>
+            </div>
+            <div class="editor-bottom wrap-row">
+              <div class="control-group"><label for="summaryStyle">Summary style</label><select id="summaryStyle">
+                  <option>General</option>
+                  <option>Bullet Points</option>
+                  <option>Key Sentences</option>
+                </select></div><button id="summaryBtn" class="button button-primary">Summarize <span>→</span></button>
+            </div>
+          </div>
+          <div class="panel result-panel">
+            <div class="panel-top"><label>SUMMARY</label><span class="result-tag">KEY IDEAS</span></div>
+            <div id="summaryOutput" class="output-content empty-state">Your summary will appear here.</div>
+            <div class="editor-bottom"><span class="subtle">Saved to your history</span>
+              <div class="inline-actions"><button class="button button-outline small"
+                  data-copy="summaryOutput">Copy</button><button class="button button-outline small"
+                  data-download="summaryOutput" data-filename="summary.txt">Download .txt</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tool-view hidden" id="view-translate">
+          <div class="tool-heading">
+            <div class="tool-icon green">文</div>
+            <div>
+              <h2>Context-aware translation</h2>
+              <p>Translate naturally while preserving meaning and tone.</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-top"><label for="translateInput">TEXT TO TRANSLATE</label><span id="translateCount">0
+                characters</span></div><textarea id="translateInput" class="large-textarea"
+              placeholder="Enter the text you want to translate…"></textarea>
+            <div class="editor-bottom wrap-row">
+              <div class="translation-controls">
+                <div class="control-group"><label for="targetLanguage">Translate into</label><select
+                    id="targetLanguage">
+                    <option>Hindi</option>
+                    <option>Telugu</option>
+                    <option>Tamil</option>
+                    <option>Kannada</option>
+                    <option>Malayalam</option>
+                    <option>Bengali</option>
+                    <option>Marathi</option>
+                    <option>Gujarati</option>
+                    <option>Punjabi</option>
+                    <option>Urdu</option>
+                    <option>English</option>
+                    <option>French</option>
+                    <option>Spanish</option>
+                    <option>German</option>
+                    <option>Japanese</option>
+                  </select></div>
+                <div class="control-group"><label for="translationTone">Tone</label><select id="translationTone">
+                    <option>Preserve original tone</option>
+                    <option>Formal</option>
+                    <option>Friendly</option>
+                    <option>Simple language</option>
+                  </select></div>
+              </div><button id="translateBtn" class="button button-primary">Translate <span>→</span></button>
+            </div>
+          </div>
+          <div class="panel result-panel">
+            <div class="panel-top"><label>TRANSLATED RESULT</label><span id="translationLanguage"
+                class="result-tag">HINDI</span></div>
+            <div id="translateOutput" class="output-content empty-state">Your translation will appear here.</div>
+            <div class="editor-bottom"><span class="subtle">Check names and specialist terminology</span>
+              <div class="inline-actions"><button class="button button-outline small"
+                  data-copy="translateOutput">Copy</button><button class="button button-outline small"
+                  data-download="translateOutput" data-filename="translation.txt">Download</button></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tool-view hidden" id="view-voice">
+          <div class="tool-heading">
+            <div class="tool-icon orange">◖</div>
+            <div>
+              <h2>Voice studio</h2>
+              <p>Speak naturally, then refine your words or translate them.</p>
+            </div>
+          </div>
+          <div class="panel voice-panel">
+            <div class="mic-orbit">
+              <div class="mic-core">🎙</div>
+            </div>
+            <h3 id="voiceState">Your voice, made clearer.</h3>
+            <p class="voice-help">Use your browser's speech recognition to dictate. Microphone support varies by
+              browser; Chrome usually works best.</p>
+            <div class="voice-actions"><button id="recordBtn" class="button button-primary">Start
+                speaking</button><button id="stopBtn" class="button button-outline" disabled>Stop</button></div>
+            <div class="field voice-text-field"><label for="voiceInput">RECOGNIZED SPEECH (EDITABLE)</label><textarea
+                id="voiceInput" placeholder="Your recognized speech will appear here…"></textarea></div>
+            <div class="voice-actions"><button id="voiceRefineBtn" class="button button-primary">Refine speech</button>
+              <div class="control-group"><label for="voiceTarget">Translate speech into</label><select id="voiceTarget">
+                  <option>Hindi</option>
+                  <option>Telugu</option>
+                  <option>Tamil</option>
+                  <option>Kannada</option>
+                  <option>Malayalam</option>
+                  <option>English</option>
+                </select></div><button id="voiceTranslateBtn" class="button button-outline">Translate speech</button>
+            </div>
+            <div id="voiceOutput" class="output-content empty-state voice-output">Processed speech will appear here.
+            </div>
+            <div class="inline-actions"><button class="button button-outline small"
+                data-copy="voiceOutput">Copy</button><button class="button button-outline small"
+                data-download="voiceOutput" data-filename="voice-result.txt">Download</button></div>
+          </div>
+        </section>
+
+        <section class="tool-view hidden" id="view-history">
+          <div class="tool-heading">
+            <div class="tool-icon slate">↺</div>
+            <div>
+              <h2>Your history</h2>
+              <p>Return to previous refinements, summaries, and translations.</p>
+            </div><button id="clearHistoryBtn" class="button button-outline push-right">Clear history</button>
+          </div>
+          <div id="historyList" class="history-list">
+            <div class="panel empty-state">Sign in to view your saved history.</div>
+          </div>
+        </section>
+      </section>
+      <footer class="page-footer"><span>LinguaSense <span class="footer-dot">•</span> Built for clearer
+          communication</span><span>AI can make mistakes. Review important content.</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+
+</html>

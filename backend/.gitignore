@@ -1,0 +1,20 @@
+
+# Environment secrets
+.env
+backend/.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local database files
+instance/
+*.db
+
+# Virtual environments
+.venv/
+venv/
+backend/.venv/
+
+# OS files
+.DS_Store
